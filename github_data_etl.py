@@ -54,12 +54,13 @@ def transform_github_data(list_of_all_data):
 # Loading all the transformed data to Postgres --> Load(L) Phase
 def load_github_data_to_postgres(concatenated_dataframe):
     # Create Schema in postgres first named Github
+    db_name = "my_database1"
     schema_name = 'github'
     table_name = 'my_github_etl_data'
 
     try:
         # Creating engine from create_engine from sqlalchemy
-        engine = create_engine("postgresql://tsandil:stratocaster@127.0.0.1:5432/my_database1")
+        engine = create_engine(f"postgresql://tsandil:stratocaster@127.0.0.1:5432/{db_name}")
         concatenated_dataframe.to_sql(table_name, schema = schema_name, con = engine, if_exists="append",index=False)
 
         # Closing Connection
